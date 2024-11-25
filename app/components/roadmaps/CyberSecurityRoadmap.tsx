@@ -22,9 +22,9 @@ interface RoadmapTopic {
   level: 'beginner' | 'intermediate' | 'advanced';
   isCompleted: boolean;
   links: TopicLink[];
-  subtopics?: string[];
-  estimatedTime?: string;
-  prerequisites?: string[];
+  subtopics: string[];
+  estimatedTime: string;
+  prerequisites: string[];
 }
 
 export default function CyberSecurityRoadmap() {
@@ -38,7 +38,7 @@ export default function CyberSecurityRoadmap() {
       description: 'Learn core security concepts and principles',
       icon: MdSecurity,
       level: 'beginner',
-      isCompleted: getTopicProgress('security-fundamentals'),
+      isCompleted: getTopicProgress('cybersecurity', 'security-fundamentals')?.isCompleted || false,
       links: [
         { title: 'CompTIA Security+ Guide', url: 'https://www.comptia.org/certifications/security' },
         { title: 'Cybersecurity Basics', url: 'https://www.cybrary.it/course/introduction-to-it-and-cybersecurity' }
@@ -53,7 +53,7 @@ export default function CyberSecurityRoadmap() {
       description: 'Master network security and monitoring',
       icon: GiFirewall,
       level: 'intermediate',
-      isCompleted: getTopicProgress('network-security'),
+      isCompleted: getTopicProgress('cybersecurity', 'network-security')?.isCompleted || false,
       links: [
         { title: 'Wireshark Fundamentals', url: 'https://www.wireshark.org/docs/' },
         { title: 'Network Security Fundamentals', url: 'https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/security.html' }
@@ -68,7 +68,7 @@ export default function CyberSecurityRoadmap() {
       description: 'Learn ethical hacking and vulnerability assessment',
       icon: SiKalilinux,
       level: 'advanced',
-      isCompleted: getTopicProgress('penetration-testing'),
+      isCompleted: getTopicProgress('cybersecurity', 'penetration-testing')?.isCompleted || false,
       links: [
         { title: 'Kali Linux Documentation', url: 'https://www.kali.org/docs/' },
         { title: 'OWASP Top 10', url: 'https://owasp.org/www-project-top-ten/' }
@@ -83,7 +83,7 @@ export default function CyberSecurityRoadmap() {
       description: 'Understand encryption and cryptographic protocols',
       icon: MdVpnLock,
       level: 'intermediate',
-      isCompleted: getTopicProgress('cryptography'),
+      isCompleted: getTopicProgress('cybersecurity', 'cryptography')?.isCompleted || false,
       links: [
         { title: 'Cryptography I - Coursera', url: 'https://www.coursera.org/learn/crypto' },
         { title: 'Applied Cryptography', url: 'https://www.schneier.com/books/applied-cryptography/' }
@@ -98,14 +98,14 @@ export default function CyberSecurityRoadmap() {
       description: 'Learn SOC operations and incident response',
       icon: SiWireshark,
       level: 'advanced',
-      isCompleted: getTopicProgress('security-operations'),
+      isCompleted: getTopicProgress('cybersecurity', 'security-operations')?.isCompleted || false,
       links: [
         { title: 'SANS Incident Handling', url: 'https://www.sans.org/cyber-security-courses/incident-handling-sec504/' },
         { title: 'Blue Team Handbook', url: 'https://www.amazon.com/Blue-Team-Handbook-condensed-Operations/dp/1726273989' }
       ],
       subtopics: ['Incident Response', 'Threat Hunting', 'SIEM', 'Forensics', 'Malware Analysis'],
       estimatedTime: '8-10 weeks',
-      prerequisites: ['network-security', 'penetration-testing']
+      prerequisites: ['network-security', 'cryptography']
     }
   ];
 
@@ -114,7 +114,7 @@ export default function CyberSecurityRoadmap() {
   };
 
   const handleCheckboxChange = (topicId: string) => {
-    updateTopicProgress(topicId, !getTopicProgress(topicId));
+    updateTopicProgress('cybersecurity', topicId, !getTopicProgress('cybersecurity', topicId)?.isCompleted);
   };
 
   return (
@@ -176,7 +176,7 @@ export default function CyberSecurityRoadmap() {
                 <div>
                   <h4 className="font-semibold mb-2">Subtopics:</h4>
                   <ul className="list-disc list-inside space-y-1">
-                    {topic.subtopics?.map((subtopic) => (
+                    {topic.subtopics.map((subtopic) => (
                       <li key={subtopic} className="text-gray-600">{subtopic}</li>
                     ))}
                   </ul>
@@ -189,7 +189,7 @@ export default function CyberSecurityRoadmap() {
                       {topic.prerequisites.map((prereq) => (
                         <li key={prereq} className="text-gray-600">
                           {topics.find(t => t.id === prereq)?.title}
-                          {getTopicProgress(prereq) && (
+                          {getTopicProgress('cybersecurity', prereq)?.isCompleted && (
                             <FiCheck className="inline-block ml-2 text-green-500" />
                           )}
                         </li>

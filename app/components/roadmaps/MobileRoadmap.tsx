@@ -19,9 +19,9 @@ interface RoadmapTopic {
   level: 'beginner' | 'intermediate' | 'advanced';
   isCompleted: boolean;
   links: TopicLink[];
-  subtopics?: string[];
-  estimatedTime?: string;
-  prerequisites?: string[];
+  subtopics: string[];
+  estimatedTime: string;
+  prerequisites: string[];
 }
 
 export default function MobileRoadmap() {
@@ -274,18 +274,16 @@ export default function MobileRoadmap() {
                     <span className="text-sm font-medium">
                       Est. Time: {topic.estimatedTime}
                     </span>
-                    {topic.prerequisites?.length > 0 && (
-                      <span className="text-sm font-medium">
-                        Prerequisites: {topic.prerequisites.join(', ')}
-                      </span>
-                    )}
+                    <span className="text-sm font-medium">
+                      Prerequisites: {topic.prerequisites.join(', ')}
+                    </span>
                   </div>
 
                   <h4 className={`font-medium ${isCompleted ? 'text-secondary' : 'text-primary'}`}>
                     Key Topics:
                   </h4>
                   <ul className="grid grid-cols-2 gap-2">
-                    {topic.subtopics?.map((subtopic) => (
+                    {topic.subtopics.map((subtopic) => (
                       <li
                         key={subtopic}
                         className={`text-sm ${isCompleted ? 'text-secondary/80' : 'text-accent'}`}

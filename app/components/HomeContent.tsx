@@ -2,10 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { FiCode, FiDatabase, FiLayers, FiSmartphone, FiCloud, FiShield, FiCpu, FiGrid, FiTerminal, FiMap, FiMenu, FiX, FiCheckCircle, FiAward, FiCheck, FiMinus, FiBarChart2 } from 'react-icons/fi';
-import { SiBlockchaindotcom, SiThreedotjs } from 'react-icons/si';
-import { TbBrain } from 'react-icons/tb';
-import { IoGameController } from 'react-icons/io5';
+import { FiArrowRight, FiAward, FiBarChart2, FiCheck, FiCheckCircle, FiCode, FiGitBranch, FiGrid, FiLayers, FiMap, FiMenu, FiMinus, FiShield, FiTerminal, FiX } from 'react-icons/fi';
+import { SiNextdotjs, SiReact, SiTailwindcss } from 'react-icons/si';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import PathTracker from './PathTracker';
@@ -30,31 +28,31 @@ const roadmaps = [
   {
     title: 'Backend Development',
     description: 'Build scalable server-side applications and APIs.',
-    icon: <FiDatabase className="w-8 h-8" />,
+    icon: <FiLayers className="w-8 h-8" />,
     path: '/roadmaps/backend'
   },
   {
     title: 'DevOps & Cloud',
     description: 'Learn deployment, automation, and cloud infrastructure.',
-    icon: <FiCloud className="w-8 h-8" />,
+    icon: <FiShield className="w-8 h-8" />,
     path: '/roadmaps/devops'
   },
   {
     title: 'Cloud Computing',
     description: 'Master cloud platforms and infrastructure.',
-    icon: <FiCloud className="w-8 h-8" />,
+    icon: <FiShield className="w-8 h-8" />,
     path: '/roadmaps/cloud'
   },
   {
     title: 'Mobile Development',
     description: 'Create native and cross-platform mobile applications.',
-    icon: <FiSmartphone className="w-8 h-8" />,
+    icon: <FiGitBranch className="w-8 h-8" />,
     path: '/roadmaps/mobile'
   },
   {
     title: 'Game Development',
     description: 'Build immersive games with modern engines and tools.',
-    icon: <IoGameController className="w-8 h-8" />,
+    icon: <FiGitBranch className="w-8 h-8" />,
     path: '/roadmaps/gamedev'
   },
   {
@@ -66,7 +64,7 @@ const roadmaps = [
   {
     title: 'Data Science',
     description: 'Master data analysis, machine learning, and AI.',
-    icon: <TbBrain className="w-8 h-8" />,
+    icon: <FiCode className="w-8 h-8" />,
     path: '/roadmaps/datascience'
   }
 ];
@@ -721,7 +719,7 @@ export default function HomeContent() {
                 role: "Frontend Developer",
                 company: "Tech Innovators",
                 image: "https://i.pravatar.cc/150?img=1",
-                quote: "PathForge helped me transition from design to development in just 6 months. The structured approach made all the difference."
+                quote: "PathForge has revolutionized my learning journey. The roadmaps are incredibly well-structured and the interactive features keep me engaged."
               },
               {
                 name: "James Wilson",
@@ -755,7 +753,7 @@ export default function HomeContent() {
                     <div className="text-sm text-accent">{testimonial.company}</div>
                   </div>
                 </div>
-                <p className="text-accent italic">"{testimonial.quote}"</p>
+                <p className="text-accent italic">&ldquo;{testimonial.quote}&rdquo;</p>
               </motion.div>
             ))}
           </div>

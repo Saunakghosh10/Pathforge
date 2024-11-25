@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { FiDatabase, FiServer, FiLayers, FiCloud, FiShield, FiCode, FiGitBranch } from 'react-icons/fi';
-import { SiNodedotjs, SiPython, SiDocker, SiMongodb, SiPostgresql, SiRedis } from 'react-icons/si';
+import { FiCode, FiGitBranch, FiServer } from 'react-icons/fi';
+import { SiNestjs, SiNodedotjs } from 'react-icons/si';
 
 interface TopicLink {
   title: string;
@@ -75,7 +75,7 @@ export default function BackendRoadmap() {
       id: 'python',
       title: 'Python Backend',
       description: 'Python web frameworks and tools',
-      icon: <SiPython className="w-6 h-6" />,
+      icon: <SiNestjs className="w-6 h-6" />,
       level: 'intermediate',
       isCompleted: false,
       estimatedTime: '6-8 weeks',
@@ -90,7 +90,7 @@ export default function BackendRoadmap() {
       id: 'databases',
       title: 'Databases',
       description: 'SQL and NoSQL database systems',
-      icon: <FiDatabase className="w-6 h-6" />,
+      icon: <FiServer className="w-6 h-6" />,
       level: 'intermediate',
       isCompleted: false,
       estimatedTime: '6-8 weeks',
@@ -120,7 +120,7 @@ export default function BackendRoadmap() {
       id: 'devops',
       title: 'DevOps & Deployment',
       description: 'Containerization and cloud deployment',
-      icon: <SiDocker className="w-6 h-6" />,
+      icon: <FiServer className="w-6 h-6" />,
       level: 'advanced',
       isCompleted: false,
       estimatedTime: '8-10 weeks',
@@ -135,7 +135,7 @@ export default function BackendRoadmap() {
       id: 'security',
       title: 'Security',
       description: 'Backend security best practices',
-      icon: <FiShield className="w-6 h-6" />,
+      icon: <FiServer className="w-6 h-6" />,
       level: 'advanced',
       isCompleted: false,
       estimatedTime: '4-6 weeks',
@@ -270,7 +270,7 @@ export default function BackendRoadmap() {
                   <span className="text-sm font-medium">
                     Est. Time: {topic.estimatedTime}
                   </span>
-                  {topic.prerequisites?.length > 0 && (
+                  {topic.prerequisites && topic.prerequisites.length > 0 && (
                     <span className="text-sm font-medium">
                       Prerequisites: {topic.prerequisites.join(', ')}
                     </span>

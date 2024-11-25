@@ -52,8 +52,9 @@ export default function ComingSoon() {
           className="text-center mb-16"
         >
           <h1 className="text-4xl font-bold mb-4">Coming Soon to PathForge</h1>
+          <h2 className="text-2xl font-semibold mb-4">We&apos;re working on something exciting!</h2>
           <p className="text-accent max-w-2xl mx-auto">
-            We're working hard to bring you these exciting features. Stay tuned for updates!
+            We&apos;re working hard to bring you these exciting features. Stay tuned for updates!
           </p>
         </motion.div>
 

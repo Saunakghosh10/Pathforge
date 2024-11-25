@@ -18,9 +18,9 @@ interface RoadmapTopic {
   level: 'beginner' | 'intermediate' | 'advanced';
   isCompleted: boolean;
   links: TopicLink[];
-  subtopics?: string[];
-  estimatedTime?: string;
-  prerequisites?: string[];
+  subtopics: string[];
+  estimatedTime: string;
+  prerequisites: string[];
 }
 
 export default function FrontendRoadmap() {
@@ -277,7 +277,7 @@ export default function FrontendRoadmap() {
                   Key Topics:
                 </h4>
                 <ul className="grid grid-cols-2 gap-2">
-                  {topic.subtopics?.map((subtopic) => (
+                  {topic.subtopics.map((subtopic) => (
                     <li
                       key={subtopic}
                       className={`text-sm ${topic.isCompleted ? 'text-secondary/80' : 'text-accent'}`}
@@ -322,7 +322,7 @@ export default function FrontendRoadmap() {
                 </div>
               )}
 
-              {topic.prerequisites?.length > 0 && (
+              {topic.prerequisites.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-current/10">
                   <h4 className={`font-medium mb-2 ${topic.isCompleted ? 'text-secondary' : 'text-primary'}`}>
                     Prerequisites:

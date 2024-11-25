@@ -23,7 +23,7 @@ interface RoadmapTopic {
   links: TopicLink[];
   subtopics?: string[];
   estimatedTime?: string;
-  prerequisites?: string[];
+  prerequisites: string[];
 }
 
 export default function CloudComputingRoadmap() {
@@ -37,7 +37,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn core cloud concepts and service models',
       icon: FiCloud,
       level: 'beginner',
-      isCompleted: getTopicProgress('cloud-fundamentals'),
+      isCompleted: getTopicProgress('cloud', 'cloud-fundamentals')?.isCompleted || false,
       links: [
         { title: 'AWS Cloud Practitioner', url: 'https://aws.amazon.com/certification/certified-cloud-practitioner/' },
         { title: 'Cloud Computing Concepts', url: 'https://www.coursera.org/learn/cloud-computing' }
@@ -52,7 +52,7 @@ export default function CloudComputingRoadmap() {
       description: 'Master Amazon Web Services core services',
       icon: FiServer,
       level: 'beginner',
-      isCompleted: getTopicProgress('aws-essentials'),
+      isCompleted: getTopicProgress('aws', 'aws-essentials')?.isCompleted || false,
       links: [
         { title: 'AWS Documentation', url: 'https://docs.aws.amazon.com/' },
         { title: 'AWS Solutions Architect', url: 'https://aws.amazon.com/certification/certified-solutions-architect-associate/' }
@@ -67,7 +67,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn Microsoft Azure cloud platform',
       icon: TbBrandAzure,
       level: 'beginner',
-      isCompleted: getTopicProgress('azure-fundamentals'),
+      isCompleted: getTopicProgress('azure', 'azure-fundamentals')?.isCompleted || false,
       links: [
         { title: 'Azure Documentation', url: 'https://docs.microsoft.com/azure/' },
         { title: 'Azure Fundamentals', url: 'https://docs.microsoft.com/learn/paths/azure-fundamentals/' }
@@ -82,7 +82,7 @@ export default function CloudComputingRoadmap() {
       description: 'Understand GCP services and cloud architecture.',
       icon: DiGoogleCloudPlatform,
       level: 'intermediate',
-      isCompleted: getTopicProgress('gcp-essentials'),
+      isCompleted: getTopicProgress('gcp', 'gcp-essentials')?.isCompleted || false,
       links: [
         { title: 'GCP Getting Started', url: 'https://cloud.google.com/gcp/getting-started' }
       ],
@@ -96,7 +96,7 @@ export default function CloudComputingRoadmap() {
       description: 'Master Docker and Kubernetes',
       icon: DiDocker,
       level: 'intermediate',
-      isCompleted: getTopicProgress('containerization'),
+      isCompleted: getTopicProgress('containerization', 'containerization')?.isCompleted || false,
       links: [
         { title: 'Docker Documentation', url: 'https://docs.docker.com/' },
         { title: 'Kubernetes Documentation', url: 'https://kubernetes.io/docs/home/' }
@@ -111,7 +111,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn infrastructure automation and management',
       icon: FiBox,
       level: 'advanced',
-      isCompleted: getTopicProgress('infrastructure-as-code'),
+      isCompleted: getTopicProgress('infrastructure-as-code', 'infrastructure-as-code')?.isCompleted || false,
       links: [
         { title: 'Terraform Documentation', url: 'https://www.terraform.io/docs' },
         { title: 'AWS CDK Guide', url: 'https://docs.aws.amazon.com/cdk/latest/guide/' }
@@ -126,7 +126,7 @@ export default function CloudComputingRoadmap() {
       description: 'Implement cloud security best practices',
       icon: FiLayers,
       level: 'advanced',
-      isCompleted: getTopicProgress('cloud-security'),
+      isCompleted: getTopicProgress('cloud-security', 'cloud-security')?.isCompleted || false,
       links: [
         { title: 'AWS Security Best Practices', url: 'https://aws.amazon.com/architecture/security-identity-compliance/' },
         { title: 'Cloud Security Alliance', url: 'https://cloudsecurityalliance.org/' }
@@ -142,7 +142,8 @@ export default function CloudComputingRoadmap() {
   };
 
   const handleCheckboxChange = (topicId: string) => {
-    updateTopicProgress(topicId, !getTopicProgress(topicId));
+    const currentProgress = getTopicProgress('cloud', topicId);
+    updateTopicProgress('cloud', topicId, !currentProgress?.isCompleted || false);
   };
 
   return (
@@ -217,7 +218,7 @@ export default function CloudComputingRoadmap() {
                       {topic.prerequisites.map((prereq) => (
                         <li key={prereq} className="text-gray-600">
                           {topics.find(t => t.id === prereq)?.title}
-                          {getTopicProgress(prereq) && (
+                          {getTopicProgress('cloud', prereq)?.isCompleted && (
                             <FiCheck className="inline-block ml-2 text-green-500" />
                           )}
                         </li>

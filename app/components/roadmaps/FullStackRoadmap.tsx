@@ -20,9 +20,9 @@ interface RoadmapTopic {
   level: 'beginner' | 'intermediate' | 'advanced';
   isCompleted: boolean;
   links: TopicLink[];
-  subtopics?: string[];
-  estimatedTime?: string;
-  prerequisites?: string[];
+  subtopics: string[];
+  estimatedTime: string;
+  prerequisites: string[];
 }
 
 export default function FullStackRoadmap() {
@@ -36,7 +36,7 @@ export default function FullStackRoadmap() {
       description: 'Master core frontend technologies and modern frameworks',
       icon: SiReact,
       level: 'beginner',
-      isCompleted: getTopicProgress('frontend-fundamentals'),
+      isCompleted: getTopicProgress('fullstack', 'frontend-fundamentals')?.isCompleted || false,
       links: [
         { title: 'React Documentation', url: 'https://reactjs.org/docs/getting-started.html' },
         { title: 'TypeScript Handbook', url: 'https://www.typescriptlang.org/docs/' }
@@ -51,7 +51,7 @@ export default function FullStackRoadmap() {
       description: 'Learn server-side programming and API development',
       icon: SiNodedotjs,
       level: 'beginner',
-      isCompleted: getTopicProgress('backend-fundamentals'),
+      isCompleted: getTopicProgress('fullstack', 'backend-fundamentals')?.isCompleted || false,
       links: [
         { title: 'Node.js Documentation', url: 'https://nodejs.org/docs/latest/api/' },
         { title: 'Express.js Guide', url: 'https://expressjs.com/en/guide/routing.html' }
@@ -66,7 +66,7 @@ export default function FullStackRoadmap() {
       description: 'Master both SQL and NoSQL databases',
       icon: SiMongodb,
       level: 'intermediate',
-      isCompleted: getTopicProgress('database-management'),
+      isCompleted: getTopicProgress('fullstack', 'database-management')?.isCompleted || false,
       links: [
         { title: 'MongoDB University', url: 'https://university.mongodb.com/' },
         { title: 'PostgreSQL Tutorial', url: 'https://www.postgresqltutorial.com/' }
@@ -81,7 +81,7 @@ export default function FullStackRoadmap() {
       description: 'Advanced server-side concepts and frameworks',
       icon: SiNestjs,
       level: 'advanced',
-      isCompleted: getTopicProgress('advanced-backend'),
+      isCompleted: getTopicProgress('fullstack', 'advanced-backend')?.isCompleted || false,
       links: [
         { title: 'NestJS Documentation', url: 'https://docs.nestjs.com/' },
         { title: 'GraphQL Documentation', url: 'https://graphql.org/learn/' }
@@ -96,7 +96,7 @@ export default function FullStackRoadmap() {
       description: 'Learn deployment and container orchestration',
       icon: SiDocker,
       level: 'intermediate',
-      isCompleted: getTopicProgress('devops-basics'),
+      isCompleted: getTopicProgress('fullstack', 'devops-basics')?.isCompleted || false,
       links: [
         { title: 'Docker Documentation', url: 'https://docs.docker.com/' },
         { title: 'CI/CD Best Practices', url: 'https://www.atlassian.com/continuous-delivery/principles' }
@@ -112,7 +112,7 @@ export default function FullStackRoadmap() {
   };
 
   const handleCheckboxChange = (topicId: string) => {
-    updateTopicProgress(topicId, !getTopicProgress(topicId));
+    updateTopicProgress('fullstack', topicId, !getTopicProgress('fullstack', topicId)?.isCompleted);
   };
 
   return (
@@ -174,27 +174,25 @@ export default function FullStackRoadmap() {
                 <div>
                   <h4 className="font-semibold mb-2">Subtopics:</h4>
                   <ul className="list-disc list-inside space-y-1">
-                    {topic.subtopics?.map((subtopic) => (
+                    {topic.subtopics.map((subtopic) => (
                       <li key={subtopic} className="text-gray-600">{subtopic}</li>
                     ))}
                   </ul>
                 </div>
                 
-                {topic.prerequisites.length > 0 && (
-                  <div>
-                    <h4 className="font-semibold mb-2">Prerequisites:</h4>
-                    <ul className="list-disc list-inside space-y-1">
-                      {topic.prerequisites.map((prereq) => (
-                        <li key={prereq} className="text-gray-600">
-                          {topics.find(t => t.id === prereq)?.title}
-                          {getTopicProgress(prereq) && (
-                            <FiCheck className="inline-block ml-2 text-green-500" />
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div>
+                  <h4 className="font-semibold mb-2">Prerequisites:</h4>
+                  <ul className="list-disc list-inside space-y-1">
+                    {topic.prerequisites.map((prereq) => (
+                      <li key={prereq} className="text-gray-600">
+                        {topics.find(t => t.id === prereq)?.title}
+                        {getTopicProgress('fullstack', prereq)?.isCompleted && (
+                          <FiCheck className="inline-block ml-2 text-green-500" />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 
                 <div>
                   <h4 className="font-semibold mb-2">Resources:</h4>
