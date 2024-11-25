@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Space_Grotesk } from 'next/font/google'
 import "./globals.css";
 import { Providers } from "./providers";
+import Script from 'next/script';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,6 +26,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: 'PathForge - Forge Your Development Journey',
   description: 'Navigate your path to programming mastery with curated learning roadmaps.',
+  other: {
+    'vercel-analytics': 'false',
+  }
 };
 
 export default function RootLayout({
@@ -35,8 +39,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
-        <meta name="vercel-analytics" content="false" />
-        <meta name="vercel" content="false" />
+        <Script id="disable-vercel" strategy="beforeInteractive">
+          {`
+            window.__VERCEL_NO_BANNER__ = true;
+            window.__VERCEL_INSIGHTS_ENABLED__ = false;
+          `}
+        </Script>
       </head>
       <body
         className={`bg-secondary text-primary min-h-screen font-sans ${geistSans.variable} ${geistMono.variable} antialiased`}

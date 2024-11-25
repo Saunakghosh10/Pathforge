@@ -72,7 +72,7 @@ const roadmaps = [
 export default function HomeContent() {
   const heroRef = useRef(null);
   const featuredRef = useRef(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -181,102 +181,119 @@ export default function HomeContent() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <motion.a 
                 href="#roadmaps"
-                className="text-primary/80 hover:text-primary transition-colors"
+                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-2"
                 whileHover={{ y: -2 }}
               >
-                Roadmaps
+                <FiMap className="w-5 h-5" />
+                <span>Roadmaps</span>
+              </motion.a>
+              <motion.a
+                href="https://github.com/Saunakghosh10/Pathforge"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-2"
+                whileHover={{ y: -2 }}
+              >
+                <FiGitBranch className="w-5 h-5" />
+                <span>Star</span>
               </motion.a>
               <motion.a 
-                href="#features"
-                className="text-primary/80 hover:text-primary transition-colors"
+                href="#coming-soon"
+                className="inline-flex items-center space-x-2 text-primary/80 hover:text-primary transition-colors"
                 whileHover={{ y: -2 }}
               >
-                Features
-              </motion.a>
-              <motion.a 
-                href="#about"
-                className="text-primary/80 hover:text-primary transition-colors"
-                whileHover={{ y: -2 }}
-              >
-                About
-              </motion.a>
-              <motion.a 
-                href="/coming-soon"
-                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-1"
-                whileHover={{ y: -2 }}
-              >
+                <FiTerminal className="w-5 h-5" />
                 <span>Coming Soon</span>
                 <div className="px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">NEW</div>
               </motion.a>
-              <Link href="/analytics" className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-gray-800 to-black text-white rounded-lg hover:from-black hover:to-gray-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl border border-gray-700">
+              <Link 
+                href="/analytics" 
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-primary text-secondary rounded-lg hover:bg-accent transition-all transform hover:scale-105 shadow-md hover:shadow-lg"
+              >
                 <FiBarChart2 className="w-5 h-5" />
-                <span className="font-medium">View Learning Analytics</span>
+                <span className="font-medium">Analytics</span>
               </Link>
               <motion.button
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden p-2 rounded-lg hover:bg-gray-medium transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 bg-primary text-secondary rounded-full text-sm font-medium hover:bg-accent transition-colors duration-300"
               >
-                Get Started
-              </motion.button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <motion.button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2"
-              >
-                {isMenuOpen ? (
+                {isOpen ? (
                   <FiX className="w-6 h-6" />
                 ) : (
                   <FiMenu className="w-6 h-6" />
                 )}
               </motion.button>
             </div>
+
+            {/* Mobile Navigation Menu */}
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-full right-0 w-64 mt-2 py-2 bg-secondary rounded-lg shadow-lg border border-gray-medium overflow-hidden"
+              >
+                <div className="space-y-1">
+                  <a
+                    href="#roadmaps"
+                    className="flex items-center space-x-2 px-4 py-2 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiMap className="w-5 h-5" />
+                    <span>Roadmaps</span>
+                  </a>
+                  <a
+                    href="https://github.com/yourusername/pathforge"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 px-4 py-2 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiGitBranch className="w-5 h-5" />
+                    <span>Star on GitHub</span>
+                  </a>
+                  <a
+                    href="#coming-soon"
+                    className="flex items-center space-x-2 px-4 py-2 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiTerminal className="w-5 h-5" />
+                    <span>Coming Soon</span>
+                    <div className="px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">NEW</div>
+                  </a>
+                  <Link
+                    href="/analytics"
+                    className="flex items-center space-x-2 mx-4 px-4 py-2 bg-primary text-secondary rounded-lg hover:bg-accent transition-all"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiBarChart2 className="w-5 h-5" />
+                    <span className="font-medium">Analytics</span>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
           </div>
 
-          {/* Mobile Menu */}
-          <motion.div
-            initial={false}
-            animate={{
-              height: isMenuOpen ? 'auto' : 0,
-              opacity: isMenuOpen ? 1 : 0
-            }}
-            className="md:hidden overflow-hidden"
-          >
-            <div className="py-4 space-y-4">
-              <a href="#roadmaps" className="block text-primary/80 hover:text-primary transition-colors">
-                Roadmaps
-              </a>
-              <a href="#features" className="block text-primary/80 hover:text-primary transition-colors">
-                Features
-              </a>
-              <a href="#about" className="block text-primary/80 hover:text-primary transition-colors">
-                About
-              </a>
-              <a href="/coming-soon" className="block text-primary/80 hover:text-primary transition-colors">
-                <div className="flex items-center space-x-1">
-                  <span>Coming Soon</span>
-                  <div className="px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">NEW</div>
-                </div>
-              </a>
-              <Link href="/analytics" className="block">
-                <div className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-gray-800 to-black text-white rounded-lg hover:from-black hover:to-gray-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl border border-gray-700 w-full">
-                  <FiBarChart2 className="w-5 h-5" />
-                  <span className="font-medium">View Learning Analytics</span>
-                </div>
-              </Link>
-              <button className="w-full px-4 py-2 bg-primary text-secondary rounded-full text-sm font-medium hover:bg-accent transition-colors duration-300">
-                Get Started
-              </button>
-            </div>
-          </motion.div>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <motion.button
+              onClick={() => setIsOpen(!isOpen)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2"
+            >
+              {isOpen ? (
+                <FiX className="w-6 h-6" />
+              ) : (
+                <FiMenu className="w-6 h-6" />
+              )}
+            </motion.button>
+          </div>
         </div>
       </motion.nav>
 
