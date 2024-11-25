@@ -1,6 +1,6 @@
 # PathForge - Interactive Developer Learning Platform
 
-![PathForge](public/pathforge-logo.png)
+![Screenshot 2024-11-25 233711](https://github.com/user-attachments/assets/742be1a6-4ec4-442d-8139-c24963ab7946)
 
 PathForge is a modern, interactive learning platform designed to help developers master various technology stacks through structured learning paths and hands-on experience.
 
