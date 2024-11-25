@@ -4,10 +4,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Disable Vercel toolbar
+  // Disable development indicators
   devIndicators: {
     buildActivity: false,
-  },
+  }
 }
 
 module.exports = nextConfig

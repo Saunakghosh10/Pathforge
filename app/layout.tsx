@@ -9,6 +9,7 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -19,7 +20,7 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
   display: 'swap',
-})
+});
 
 export const metadata: Metadata = {
   title: 'PathForge - Forge Your Development Journey',
@@ -32,7 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable}`} suppressHydrationWarning>
+      <head>
+        <meta name="vercel-analytics" content="false" />
+        <meta name="vercel" content="false" />
+      </head>
       <body
         className={`bg-secondary text-primary min-h-screen font-sans ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
