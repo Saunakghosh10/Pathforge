@@ -48,6 +48,8 @@ async function getRecentActivity() {
   return recentProgress;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboard() {
   const stats = await getAdminStats();
   const recentActivity = await getRecentActivity();

@@ -18,6 +18,8 @@ async function getRoadmaps() {
   });
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ContentPage() {
   const roadmaps = await getRoadmaps();
 

@@ -73,6 +73,8 @@ async function getAnalytics() {
   };
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function AnalyticsPage() {
   const analytics = await getAnalytics();
 
