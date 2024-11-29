@@ -2,39 +2,96 @@
 
 import { motion } from 'framer-motion';
 import { useProgress } from '@/app/context/ProgressContext';
-import { FiArrowRight } from 'react-icons/fi';
-import Link from 'next/link';
+import {
+  SiPython,
+  SiReact,
+  SiDocker,
+  SiAmazon,
+  SiGit,
+  SiNodedotjs,
+  SiTensorflow,
+  SiKubernetes
+} from 'react-icons/si';
+import { IconType } from 'react-icons';
 
-interface RoadmapInfo {
+interface SkillCard {
   id: string;
   title: string;
   description: string;
-  path: string;
+  icon: IconType;
+  roadmapId: string;
+  topicId: string;
 }
 
-const roadmaps: RoadmapInfo[] = [
+const skills: SkillCard[] = [
   {
-    id: 'frontend',
-    title: 'Frontend Development',
-    description: 'Master modern web development',
-    path: '/roadmaps/frontend'
+    id: 'python',
+    title: 'Python Programming',
+    description: 'Core Python concepts and best practices',
+    icon: SiPython,
+    roadmapId: 'datascience',
+    topicId: 'python-fundamentals'
   },
   {
-    id: 'backend',
-    title: 'Backend Development',
-    description: 'Build scalable server applications',
-    path: '/roadmaps/backend'
+    id: 'react',
+    title: 'React Development',
+    description: 'Modern React and component architecture',
+    icon: SiReact,
+    roadmapId: 'frontend',
+    topicId: 'react-fundamentals'
   },
   {
-    id: 'devops',
-    title: 'DevOps Engineering',
-    description: 'Master cloud and DevOps practices',
-    path: '/roadmaps/devops'
+    id: 'docker',
+    title: 'Docker',
+    description: 'Container orchestration and deployment',
+    icon: SiDocker,
+    roadmapId: 'devops',
+    topicId: 'containerization'
+  },
+  {
+    id: 'aws',
+    title: 'AWS',
+    description: 'Cloud infrastructure and services',
+    icon: SiAmazon,
+    roadmapId: 'cloud',
+    topicId: 'aws-fundamentals'
+  },
+  {
+    id: 'git',
+    title: 'Git & Version Control',
+    description: 'Source control and collaboration',
+    icon: SiGit,
+    roadmapId: 'fullstack',
+    topicId: 'version-control'
+  },
+  {
+    id: 'nodejs',
+    title: 'Node.js',
+    description: 'Server-side JavaScript development',
+    icon: SiNodedotjs,
+    roadmapId: 'backend',
+    topicId: 'nodejs-fundamentals'
+  },
+  {
+    id: 'tensorflow',
+    title: 'TensorFlow',
+    description: 'Machine learning and deep learning',
+    icon: SiTensorflow,
+    roadmapId: 'datascience',
+    topicId: 'machine-learning'
+  },
+  {
+    id: 'kubernetes',
+    title: 'Kubernetes',
+    description: 'Container orchestration at scale',
+    icon: SiKubernetes,
+    roadmapId: 'devops',
+    topicId: 'kubernetes'
   }
 ];
 
 export default function SkillAssessment() {
-  const { getRoadmapProgress } = useProgress();
+  const { getTopicProgress } = useProgress();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -50,68 +107,47 @@ export default function SkillAssessment() {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 100
-      }
+      y: 0
     }
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="text-center mb-12">
-        <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-4">
-          Your Learning Progress
-        </motion.h2>
-        <motion.p variants={itemVariants} className="text-accent max-w-2xl mx-auto">
-          Track your progress across different development paths
-        </motion.p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {roadmaps.map((roadmap) => {
-          const progress = getRoadmapProgress(roadmap.id);
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-8">Skill Assessment</h1>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        {skills.map((skill) => {
+          const progress = getTopicProgress(skill.roadmapId, skill.topicId);
+          const Icon = skill.icon;
 
           return (
-            <Link key={roadmap.id} href={roadmap.path}>
-              <motion.div
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="p-6 rounded-xl border-2 border-current/10 bg-secondary hover:shadow-lg transition-all cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-bold">{roadmap.title}</h3>
-                  <FiArrowRight className="w-5 h-5" />
-                </div>
-
-                <p className="text-accent mb-6">{roadmap.description}</p>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Progress</span>
-                    <span className="text-sm font-medium">{Math.round(progress)}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-gray-light rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                      className="h-full bg-accent rounded-full"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
+            <motion.div
+              key={skill.id}
+              variants={itemVariants}
+              className={`p-6 rounded-lg border border-gray-medium hover:shadow-lg transition-shadow ${
+                progress?.completed ? 'bg-green-50 border-l-4 border-l-green-500' : 'bg-secondary'
+              }`}
+            >
+              <div className="flex items-center space-x-3 mb-4">
+                <Icon size={24} className="text-primary" />
+                <h3 className="font-semibold text-primary">{skill.title}</h3>
+              </div>
+              <p className="text-accent text-sm mb-4">{skill.description}</p>
+              <div className="flex items-center justify-between">
+                <span className={`text-sm font-medium ${
+                  progress?.completed ? 'text-green-600' : 'text-accent'
+                }`}>
+                  {progress?.completed ? 'Completed' : 'Not Started'}
+                </span>
+              </div>
+            </motion.div>
           );
         })}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }

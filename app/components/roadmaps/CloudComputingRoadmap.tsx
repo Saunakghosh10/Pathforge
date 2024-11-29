@@ -19,7 +19,7 @@ interface RoadmapTopic {
   description: string;
   icon: IconType;
   level: 'beginner' | 'intermediate' | 'advanced';
-  isCompleted: boolean;
+  completed: boolean;
   links: TopicLink[];
   subtopics?: string[];
   estimatedTime?: string;
@@ -37,7 +37,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn core cloud concepts and service models',
       icon: FiCloud,
       level: 'beginner',
-      isCompleted: getTopicProgress('cloud', 'cloud-fundamentals')?.isCompleted || false,
+      completed: getTopicProgress('cloud', 'cloud-fundamentals')?.completed || false,
       links: [
         { title: 'AWS Cloud Practitioner', url: 'https://aws.amazon.com/certification/certified-cloud-practitioner/' },
         { title: 'Cloud Computing Concepts', url: 'https://www.coursera.org/learn/cloud-computing' }
@@ -52,7 +52,7 @@ export default function CloudComputingRoadmap() {
       description: 'Master Amazon Web Services core services',
       icon: FiServer,
       level: 'beginner',
-      isCompleted: getTopicProgress('aws', 'aws-essentials')?.isCompleted || false,
+      completed: getTopicProgress('aws', 'aws-essentials')?.completed || false,
       links: [
         { title: 'AWS Documentation', url: 'https://docs.aws.amazon.com/' },
         { title: 'AWS Solutions Architect', url: 'https://aws.amazon.com/certification/certified-solutions-architect-associate/' }
@@ -67,7 +67,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn Microsoft Azure cloud platform',
       icon: TbBrandAzure,
       level: 'beginner',
-      isCompleted: getTopicProgress('azure', 'azure-fundamentals')?.isCompleted || false,
+      completed: getTopicProgress('azure', 'azure-fundamentals')?.completed || false,
       links: [
         { title: 'Azure Documentation', url: 'https://docs.microsoft.com/azure/' },
         { title: 'Azure Fundamentals', url: 'https://docs.microsoft.com/learn/paths/azure-fundamentals/' }
@@ -82,7 +82,7 @@ export default function CloudComputingRoadmap() {
       description: 'Understand GCP services and cloud architecture.',
       icon: DiGoogleCloudPlatform,
       level: 'intermediate',
-      isCompleted: getTopicProgress('gcp', 'gcp-essentials')?.isCompleted || false,
+      completed: getTopicProgress('gcp', 'gcp-essentials')?.completed || false,
       links: [
         { title: 'GCP Getting Started', url: 'https://cloud.google.com/gcp/getting-started' }
       ],
@@ -96,7 +96,7 @@ export default function CloudComputingRoadmap() {
       description: 'Master Docker and Kubernetes',
       icon: DiDocker,
       level: 'intermediate',
-      isCompleted: getTopicProgress('containerization', 'containerization')?.isCompleted || false,
+      completed: getTopicProgress('containerization', 'containerization')?.completed || false,
       links: [
         { title: 'Docker Documentation', url: 'https://docs.docker.com/' },
         { title: 'Kubernetes Documentation', url: 'https://kubernetes.io/docs/home/' }
@@ -111,7 +111,7 @@ export default function CloudComputingRoadmap() {
       description: 'Learn infrastructure automation and management',
       icon: FiBox,
       level: 'advanced',
-      isCompleted: getTopicProgress('infrastructure-as-code', 'infrastructure-as-code')?.isCompleted || false,
+      completed: getTopicProgress('infrastructure-as-code', 'infrastructure-as-code')?.completed || false,
       links: [
         { title: 'Terraform Documentation', url: 'https://www.terraform.io/docs' },
         { title: 'AWS CDK Guide', url: 'https://docs.aws.amazon.com/cdk/latest/guide/' }
@@ -126,7 +126,7 @@ export default function CloudComputingRoadmap() {
       description: 'Implement cloud security best practices',
       icon: FiLayers,
       level: 'advanced',
-      isCompleted: getTopicProgress('cloud-security', 'cloud-security')?.isCompleted || false,
+      completed: getTopicProgress('cloud-security', 'cloud-security')?.completed || false,
       links: [
         { title: 'AWS Security Best Practices', url: 'https://aws.amazon.com/architecture/security-identity-compliance/' },
         { title: 'Cloud Security Alliance', url: 'https://cloudsecurityalliance.org/' }
@@ -143,7 +143,7 @@ export default function CloudComputingRoadmap() {
 
   const handleCheckboxChange = (topicId: string) => {
     const currentProgress = getTopicProgress('cloud', topicId);
-    updateTopicProgress('cloud', topicId, !currentProgress?.isCompleted || false);
+    updateTopicProgress('cloud', topicId, !currentProgress?.completed || false);
   };
 
   return (
@@ -186,7 +186,7 @@ export default function CloudComputingRoadmap() {
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    checked={topic.isCompleted}
+                    checked={topic.completed}
                     onChange={() => handleCheckboxChange(topic.id)}
                     className="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500"
                   />
@@ -218,7 +218,7 @@ export default function CloudComputingRoadmap() {
                       {topic.prerequisites.map((prereq) => (
                         <li key={prereq} className="text-gray-600">
                           {topics.find(t => t.id === prereq)?.title}
-                          {getTopicProgress('cloud', prereq)?.isCompleted && (
+                          {getTopicProgress('cloud', prereq)?.completed && (
                             <FiCheck className="inline-block ml-2 text-green-500" />
                           )}
                         </li>

@@ -1,221 +1,146 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { FiClock, FiCheck } from 'react-icons/fi';
-import { SiReact, SiNodedotjs, SiMongodb, SiPostgresql, SiDocker, SiGit, SiTypescript, SiRedux, SiNestjs, SiGraphql } from 'react-icons/si';
 import { useProgress } from '@/app/context/ProgressContext';
-import { IconType } from 'react-icons';
-
-interface TopicLink {
-  title: string;
-  url: string;
-}
-
-interface RoadmapTopic {
-  id: string;
-  title: string;
-  description: string;
-  icon: IconType;
-  level: 'beginner' | 'intermediate' | 'advanced';
-  isCompleted: boolean;
-  links: TopicLink[];
-  subtopics: string[];
-  estimatedTime: string;
-  prerequisites: string[];
-}
+import {
+  SiReact,
+  SiNodedotjs,
+  SiPostgresql,
+  SiDocker,
+  SiAmazon,
+  SiGit,
+  SiNginx,
+  SiRedis
+} from 'react-icons/si';
+import { RoadmapTopic } from '@/types/roadmap';
+import RoadmapNode from './RoadmapNode';
 
 export default function FullStackRoadmap() {
-  const { updateTopicProgress, getTopicProgress } = useProgress();
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const { getTopicProgress } = useProgress();
 
   const topics: RoadmapTopic[] = [
     {
       id: 'frontend-fundamentals',
-      title: 'Frontend Fundamentals',
-      description: 'Master core frontend technologies and modern frameworks',
+      title: 'Frontend Development',
+      description:
+        'Master React, TypeScript, and modern web development.',
       icon: SiReact,
       level: 'beginner',
-      isCompleted: getTopicProgress('fullstack', 'frontend-fundamentals')?.isCompleted || false,
+      completed: getTopicProgress('fullstack', 'frontend-fundamentals')?.completed || false,
       links: [
         { title: 'React Documentation', url: 'https://reactjs.org/docs/getting-started.html' },
         { title: 'TypeScript Handbook', url: 'https://www.typescriptlang.org/docs/' }
-      ],
-      subtopics: ['HTML/CSS', 'JavaScript', 'React', 'TypeScript', 'Redux', 'Next.js'],
-      estimatedTime: '8-10 weeks',
-      prerequisites: []
+      ]
     },
     {
-      id: 'backend-fundamentals',
-      title: 'Backend Fundamentals',
-      description: 'Learn server-side programming and API development',
+      id: 'backend-development',
+      title: 'Backend Development',
+      description:
+        'Build scalable APIs with Node.js and Express.',
       icon: SiNodedotjs,
-      level: 'beginner',
-      isCompleted: getTopicProgress('fullstack', 'backend-fundamentals')?.isCompleted || false,
-      links: [
-        { title: 'Node.js Documentation', url: 'https://nodejs.org/docs/latest/api/' },
-        { title: 'Express.js Guide', url: 'https://expressjs.com/en/guide/routing.html' }
-      ],
-      subtopics: ['Node.js', 'Express.js', 'REST APIs', 'Authentication', 'Authorization'],
-      estimatedTime: '6-8 weeks',
-      prerequisites: ['frontend-fundamentals']
-    },
-    {
-      id: 'database-management',
-      title: 'Database Management',
-      description: 'Master both SQL and NoSQL databases',
-      icon: SiMongodb,
       level: 'intermediate',
-      isCompleted: getTopicProgress('fullstack', 'database-management')?.isCompleted || false,
+      completed: getTopicProgress('fullstack', 'backend-development')?.completed || false,
       links: [
-        { title: 'MongoDB University', url: 'https://university.mongodb.com/' },
-        { title: 'PostgreSQL Tutorial', url: 'https://www.postgresqltutorial.com/' }
-      ],
-      subtopics: ['MongoDB', 'PostgreSQL', 'Database Design', 'Data Modeling', 'Indexing'],
-      estimatedTime: '4-6 weeks',
-      prerequisites: ['backend-fundamentals']
+        { title: 'Node.js Documentation', url: 'https://nodejs.org/docs/latest-v14.x/api/' },
+        { title: 'Express Guide', url: 'https://expressjs.com/en/guide/routing.html' }
+      ]
     },
     {
-      id: 'advanced-backend',
-      title: 'Advanced Backend',
-      description: 'Advanced server-side concepts and frameworks',
-      icon: SiNestjs,
-      level: 'advanced',
-      isCompleted: getTopicProgress('fullstack', 'advanced-backend')?.isCompleted || false,
+      id: 'database',
+      title: 'Database Management',
+      description:
+        'Learn SQL and database design with PostgreSQL.',
+      icon: SiPostgresql,
+      level: 'intermediate',
+      completed: getTopicProgress('fullstack', 'database')?.completed || false,
       links: [
-        { title: 'NestJS Documentation', url: 'https://docs.nestjs.com/' },
-        { title: 'GraphQL Documentation', url: 'https://graphql.org/learn/' }
-      ],
-      subtopics: ['NestJS', 'GraphQL', 'Microservices', 'Message Queues'],
-      estimatedTime: '8-10 weeks',
-      prerequisites: ['database-management']
+        { title: 'PostgreSQL Tutorial', url: 'https://www.postgresql.org/docs/current/tutorial.html' },
+        { title: 'SQL Fundamentals', url: 'https://www.w3schools.com/sql/' }
+      ]
     },
     {
-      id: 'devops-basics',
-      title: 'DevOps Fundamentals',
-      description: 'Learn deployment and container orchestration',
+      id: 'containerization',
+      title: 'Containerization',
+      description:
+        'Containerize applications with Docker.',
       icon: SiDocker,
       level: 'intermediate',
-      isCompleted: getTopicProgress('fullstack', 'devops-basics')?.isCompleted || false,
+      completed: getTopicProgress('fullstack', 'containerization')?.completed || false,
       links: [
         { title: 'Docker Documentation', url: 'https://docs.docker.com/' },
-        { title: 'CI/CD Best Practices', url: 'https://www.atlassian.com/continuous-delivery/principles' }
-      ],
-      subtopics: ['Docker', 'CI/CD', 'Cloud Platforms', 'Monitoring'],
-      estimatedTime: '4-6 weeks',
-      prerequisites: ['advanced-backend']
+        { title: 'Docker Compose', url: 'https://docs.docker.com/compose/' }
+      ]
+    },
+    {
+      id: 'cloud-services',
+      title: 'Cloud Services',
+      description:
+        'Deploy and manage applications on AWS.',
+      icon: SiAmazon,
+      level: 'advanced',
+      completed: getTopicProgress('fullstack', 'cloud-services')?.completed || false,
+      links: [
+        { title: 'AWS Documentation', url: 'https://docs.aws.amazon.com/' },
+        { title: 'AWS Free Tier', url: 'https://aws.amazon.com/free/' }
+      ]
+    },
+    {
+      id: 'version-control',
+      title: 'Version Control',
+      description:
+        'Master Git and collaborative development.',
+      icon: SiGit,
+      level: 'beginner',
+      completed: getTopicProgress('fullstack', 'version-control')?.completed || false,
+      links: [
+        { title: 'Git Documentation', url: 'https://git-scm.com/doc' },
+        { title: 'GitHub Flow', url: 'https://guides.github.com/introduction/flow/' }
+      ]
+    },
+    {
+      id: 'web-servers',
+      title: 'Web Servers',
+      description:
+        'Configure and manage Nginx web server.',
+      icon: SiNginx,
+      level: 'intermediate',
+      completed: getTopicProgress('fullstack', 'web-servers')?.completed || false,
+      links: [
+        { title: 'Nginx Documentation', url: 'https://nginx.org/en/docs/' },
+        { title: 'Nginx Config', url: 'https://www.nginx.com/resources/wiki/start/topics/examples/full/' }
+      ]
+    },
+    {
+      id: 'caching',
+      title: 'Caching',
+      description:
+        'Implement caching with Redis.',
+      icon: SiRedis,
+      level: 'advanced',
+      completed: getTopicProgress('fullstack', 'caching')?.completed || false,
+      links: [
+        { title: 'Redis Documentation', url: 'https://redis.io/documentation' },
+        { title: 'Redis Tutorial', url: 'https://try.redis.io/' }
+      ]
     }
   ];
 
-  const handleTopicClick = (topicId: string) => {
-    setSelectedTopic(selectedTopic === topicId ? null : topicId);
-  };
-
-  const handleCheckboxChange = (topicId: string) => {
-    updateTopicProgress('fullstack', topicId, !getTopicProgress('fullstack', topicId)?.isCompleted);
-  };
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <motion.h1 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-bold text-center mb-12"
-      >
-        Full Stack Development Roadmap
-      </motion.h1>
-      
-      <div className="grid grid-cols-1 gap-6 md:gap-8">
-        {topics.map((topic, index) => (
-          <motion.div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="p-6"
+    >
+      <h1 className="text-3xl font-bold mb-8">Full Stack Development Roadmap</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {topics.map((topic) => (
+          <RoadmapNode
             key={topic.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={`bg-white rounded-lg shadow-lg overflow-hidden ${
-              selectedTopic === topic.id ? 'ring-2 ring-blue-500' : ''
-            }`}
-          >
-            <div
-              className="p-6 cursor-pointer flex items-center justify-between"
-              onClick={() => handleTopicClick(topic.id)}
-            >
-              <div className="flex items-center space-x-4">
-                <topic.icon className="w-8 h-8 text-blue-500" />
-                <div>
-                  <h3 className="text-xl font-semibold">{topic.title}</h3>
-                  <p className="text-gray-600">{topic.description}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <FiClock className="text-gray-400" />
-                  <span className="text-sm text-gray-500">{topic.estimatedTime}</span>
-                </div>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={topic.isCompleted}
-                    onChange={() => handleCheckboxChange(topic.id)}
-                    className="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-500">Completed</span>
-                </label>
-              </div>
-            </div>
-            
-            {selectedTopic === topic.id && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="px-6 pb-6 space-y-4"
-              >
-                <div>
-                  <h4 className="font-semibold mb-2">Subtopics:</h4>
-                  <ul className="list-disc list-inside space-y-1">
-                    {topic.subtopics.map((subtopic) => (
-                      <li key={subtopic} className="text-gray-600">{subtopic}</li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-2">Prerequisites:</h4>
-                  <ul className="list-disc list-inside space-y-1">
-                    {topic.prerequisites.map((prereq) => (
-                      <li key={prereq} className="text-gray-600">
-                        {topics.find(t => t.id === prereq)?.title}
-                        {getTopicProgress('fullstack', prereq)?.isCompleted && (
-                          <FiCheck className="inline-block ml-2 text-green-500" />
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-2">Resources:</h4>
-                  <ul className="space-y-2">
-                    {topic.links.map((link) => (
-                      <li key={link.title}>
-                        <a
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-600 underline"
-                        >
-                          {link.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
+            topic={topic}
+            roadmapId="fullstack"
+          />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

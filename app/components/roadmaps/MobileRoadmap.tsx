@@ -224,7 +224,7 @@ export default function MobileRoadmap() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {topics.map((topic) => {
             const progress = getTopicProgress('mobile', topic.id);
-            const isCompleted = progress?.isCompleted || false;
+            const isCompleted = progress?.completed || false;
 
             return (
               <motion.div

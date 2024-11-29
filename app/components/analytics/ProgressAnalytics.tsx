@@ -16,6 +16,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import LearningMilestones from './LearningMilestones';
 
 interface RoadmapProgress {
   name: string;
@@ -49,7 +50,7 @@ export default function ProgressAnalytics() {
     const progress = roadmaps.map(roadmap => {
       const topics = getAllTopics(roadmap.id);
       const completed = topics.filter(topic => 
-        getTopicProgress(roadmap.id, topic)?.isCompleted
+        getTopicProgress(roadmap.id, topic)?.completed
       ).length;
 
       return {
@@ -72,7 +73,7 @@ export default function ProgressAnalytics() {
     roadmaps.forEach(roadmap => {
       const topics = getAllTopics(roadmap.id);
       topics.forEach(topic => {
-        if (getTopicProgress(roadmap.id, topic)?.isCompleted) {
+        if (getTopicProgress(roadmap.id, topic)?.completed) {
           const level = getTopicLevel(roadmap.id, topic);
           const levelIndex = levels.findIndex(l => l.name.toLowerCase() === level);
           if (levelIndex !== -1) {
@@ -88,7 +89,7 @@ export default function ProgressAnalytics() {
     const totalMinutes = roadmaps.reduce((acc, roadmap) => {
       const topics = getAllTopics(roadmap.id);
       const completedTopics = topics.filter(topic => 
-        getTopicProgress(roadmap.id, topic)?.isCompleted
+        getTopicProgress(roadmap.id, topic)?.completed
       );
       
       return acc + completedTopics.reduce((time, topic) => {
@@ -208,6 +209,15 @@ export default function ProgressAnalytics() {
           </div>
         </motion.div>
       </div>
+
+      {/* Learning Milestones */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mt-8"
+      >
+        <LearningMilestones />
+      </motion.div>
     </div>
   );
 }

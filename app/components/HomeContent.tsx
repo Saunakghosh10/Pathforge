@@ -3,9 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { FiMap, FiCheckCircle, FiAward, FiCode, FiSmartphone, FiCloud, FiDatabase, FiLayers, FiArrowRight, FiTerminal, FiMinus, FiShield, FiX, FiMenu, FiGrid, FiPieChart, FiCheck, FiMonitor, FiServer } from 'react-icons/fi';
+import { FiMap, FiCheckCircle, FiAward, FiCode, FiSmartphone, FiCloud, FiDatabase, FiLayers, FiArrowRight, FiTerminal, FiMinus, FiShield, FiX, FiMenu, FiGrid, FiPieChart, FiCheck, FiMonitor, FiServer, FiUsers, FiZap } from 'react-icons/fi';
 import { FaGithub } from 'react-icons/fa';
 import { SiNextdotjs, SiReact, SiTailwindcss } from 'react-icons/si';
+import { AcademicCapIcon, CommandLineIcon, MapIcon, CubeIcon } from '@heroicons/react/24/solid';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import PathTracker from './PathTracker';
@@ -104,28 +105,15 @@ export default function HomeContent() {
 
   return (
     <div className="min-h-screen bg-secondary text-primary">
-      <motion.div 
+      {/* Navigation with fade-in animation */}
+      <motion.nav 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="fixed top-0 left-0 right-0 bg-black text-white py-1.5 z-50 border-b border-gray-800"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm font-medium tracking-wide">
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
-            >
-              🚧
-            </motion.span>
-            {" "}PathForge is still under development. Some features may be incomplete or change.
-          </p>
-        </div>
-      </motion.div>
-      {/* Navigation - Adjusted top padding to account for development notice */}
-      <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        transition={{ 
+          delay: 0.3,
+          duration: 0.5,
+          ease: "easeOut"
+        }}
         className="fixed top-0 left-0 right-0 z-50 bg-secondary/80 backdrop-blur-md border-b border-gray-medium"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,39 +171,39 @@ export default function HomeContent() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
-              <motion.a 
-                href="#roadmaps"
-                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-2 text-sm lg:text-base"
-                whileHover={{ y: -2 }}
+            <div className="hidden md:flex items-center space-x-8">
+              <Link
+                href="/"
+                className="text-sm font-medium hover:text-primary transition-colors"
               >
-                <FiMap className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span>Roadmaps</span>
-              </motion.a>
-              <motion.a
-                href="https://github.com/Saunakghosh10/pathforge"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-2 text-sm lg:text-base"
-                whileHover={{ y: -2 }}
+                Home
+              </Link>
+              <Link
+                href="/roadmaps"
+                className="text-sm font-medium hover:text-primary transition-colors"
               >
-                <FaGithub className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span>Star</span>
-              </motion.a>
+                Roadmaps
+              </Link>
+              <Link
+                href="/challenges"
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
+                Challenges
+              </Link>
+              <Link
+                href="/community"
+                className="text-sm font-medium hover:text-primary transition-colors"
+              >
+                Community
+              </Link>
               <Link
                 href="/coming-soon"
-                className="text-primary/80 hover:text-primary transition-colors flex items-center space-x-2 text-sm lg:text-base"
+                className="text-sm font-medium hover:text-primary transition-colors group relative"
               >
-                <FiTerminal className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span>Coming Soon</span>
-                <div className="px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">NEW</div>
-              </Link>
-              <Link 
-                href="/analytics" 
-                className="inline-flex items-center space-x-2 px-3 py-1.5 md:px-4 md:py-2 bg-primary text-secondary rounded-lg hover:bg-accent transition-all w-full justify-center"
-              >
-                <FiPieChart className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span className="font-medium">Analytics</span>
+                Coming Soon
+                <span className="absolute -top-1 -right-6 px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium group-hover:bg-primary/20 transition-colors">
+                  NEW
+                </span>
               </Link>
             </div>
 
@@ -244,16 +232,51 @@ export default function HomeContent() {
                 className="absolute top-full right-0 w-[calc(100vw-2rem)] md:w-64 mt-2 py-2 bg-secondary rounded-lg shadow-lg border border-gray-medium overflow-hidden mx-4"
               >
                 <div className="space-y-1">
-                  <a
-                    href="#roadmaps"
+                  <Link
+                    href="/roadmaps"
                     className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     <FiMap className="w-5 h-5" />
-                    <span>Roadmaps</span>
-                  </a>
+                    <span>Explore Roadmaps</span>
+                  </Link>
+                  <Link
+                    href="/auth/signin"
+                    className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiCheck className="w-5 h-5" />
+                    <span>Get Started</span>
+                  </Link>
+                  <Link
+                    href="/challenges"
+                    className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiCode className="w-5 h-5" />
+                    <span>Challenges</span>
+                  </Link>
+                  <Link
+                    href="/community"
+                    className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiUsers className="w-5 h-5" />
+                    <span>Community</span>
+                  </Link>
+                  <Link
+                    href="/coming-soon"
+                    className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors relative"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FiZap className="w-5 h-5" />
+                    <span>Coming Soon</span>
+                    <span className="ml-2 px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">
+                      NEW
+                    </span>
+                  </Link>
                   <a
-                    href="https://github.com/yourusername/pathforge"
+                    href="https://github.com/Saunakghosh10/pathforge"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
@@ -262,25 +285,6 @@ export default function HomeContent() {
                     <FaGithub className="w-5 h-5" />
                     <span>Star on GitHub</span>
                   </a>
-                  <Link
-                    href="/coming-soon"
-                    className="flex items-center space-x-2 px-4 py-3 text-primary hover:bg-gray-medium transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <FiTerminal className="w-5 h-5" />
-                    <span>Coming Soon</span>
-                    <div className="px-1.5 py-0.5 bg-primary/10 rounded-full text-[10px] font-medium">NEW</div>
-                  </Link>
-                  <div className="px-4 pt-2">
-                    <Link
-                      href="/analytics"
-                      className="flex items-center space-x-2 px-4 py-2.5 bg-primary text-secondary rounded-lg hover:bg-accent transition-all w-full justify-center"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <FiPieChart className="w-5 h-5" />
-                      <span className="font-medium">Analytics</span>
-                    </Link>
-                  </div>
                 </div>
               </motion.div>
             )}
@@ -297,32 +301,61 @@ export default function HomeContent() {
         className="relative min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] pt-20 md:pt-24 flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8"
       >
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div variants={itemVariants} className="text-center">
+          <motion.div variants={itemVariants} className="text-center relative z-20">
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent animate-gradient leading-[1.2]">
               PathForge
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-accent max-w-2xl mx-auto px-4">
               Forge Your Path to Programming Mastery
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block"
-            >
-              <a
-                href="#roadmaps"
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-primary text-secondary rounded-full text-base sm:text-lg font-medium hover:bg-accent transition-colors duration-300"
+            <div className="flex items-center justify-center space-x-4 sm:space-x-6 relative">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block"
               >
-                Explore Paths
-              </a>
-            </motion.div>
+                <Link
+                  href="/roadmaps"
+                  className="relative group inline-flex items-center px-8 py-4 bg-primary text-secondary rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:bg-accent transition-all duration-300 ease-out overflow-hidden"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = '/roadmaps';
+                    setIsOpen(false);
+                  }}
+                >
+                  <span className="relative z-10">Explore Roadmaps</span>
+                  <FiArrowRight className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300 ease-out relative z-10" />
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block"
+              >
+                <Link
+                  href="/auth/signin"
+                  className="relative group inline-flex items-center px-8 py-4 bg-secondary text-primary border-2 border-primary rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:bg-primary hover:text-secondary transition-all duration-300 ease-out overflow-hidden"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = '/auth/signin';
+                    setIsOpen(false);
+                  }}
+                >
+                  <span className="relative z-10">Get Started</span>
+                  <FiCheck className="ml-2 w-5 h-5 transform group-hover:scale-110 transition-transform duration-300 ease-out relative z-10" />
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                </Link>
+              </motion.div>
+            </div>
           </motion.div>
+          
+          {/* Abstract background pattern */}
+          <div className="absolute inset-0 -z-10 opacity-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#000_1px,transparent_1px)] [background-size:32px_32px]"></div>
+          </div>
         </div>
         
-        {/* Abstract background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#000_1px,transparent_1px)] [background-size:32px_32px]"></div>
-        </div>
       </motion.section>
 
       {/* Roadmaps Grid */}
@@ -338,17 +371,24 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto">
           <motion.h2 
             variants={itemVariants}
-            className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-16"
+            className="text-3xl sm:text-4xl font-bold text-center mb-4"
           >
-            Development Paths
+            Explore Roadmaps
           </motion.h2>
+          <motion.p
+            variants={itemVariants}
+            className="text-accent text-center max-w-2xl mx-auto mb-12"
+          >
+            Choose from our curated collection of learning paths designed to help you master different areas of software development.
+          </motion.p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {roadmaps.map((roadmap, index) => {
               const Component = Link;
               const href = roadmap.path;
               const componentProps = { href };
-              
+　
+　
               return (
                 <Component key={roadmap.title} {...componentProps}>
                   <motion.div
@@ -457,7 +497,8 @@ export default function HomeContent() {
                   PathForge is dedicated to revolutionizing developer education by providing clear, structured learning paths that guide you from beginner to expert. We believe in learning by doing, supported by a community of passionate developers.
                 </p>
               </div>
-              
+　
+　
               <div className="space-y-4">
                 <h3 className="text-2xl font-semibold">What Sets Us Apart</h3>
                 <ul className="space-y-3">
@@ -481,45 +522,61 @@ export default function HomeContent() {
               variants={itemVariants}
               className="relative"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
                 <motion.div
                   className="p-6 bg-gray-light rounded-xl"
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <FiAward className="w-8 h-8 text-primary mb-4" />
-                  <h4 className="font-semibold mb-2">Expert-Led Content</h4>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <AcademicCapIcon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h4 className="font-semibold">Expert-Led Content</h4>
+                  </div>
                   <p className="text-sm text-accent">Curriculum designed by industry professionals</p>
                 </motion.div>
-                
+
                 <motion.div
                   className="p-6 bg-gray-light rounded-xl"
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <FiTerminal className="w-8 h-8 text-primary mb-4" />
-                  <h4 className="font-semibold mb-2">Hands-On Practice</h4>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <CommandLineIcon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h4 className="font-semibold">Hands-On Practice</h4>
+                  </div>
                   <p className="text-sm text-accent">Learn through practical coding exercises</p>
                 </motion.div>
-                
+
                 <motion.div
                   className="p-6 bg-gray-light rounded-xl"
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <FiMap className="w-8 h-8 text-primary mb-4" />
-                  <h4 className="font-semibold mb-2">Clear Roadmaps</h4>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <MapIcon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h4 className="font-semibold">Clear Roadmaps</h4>
+                  </div>
                   <p className="text-sm text-accent">Structured paths for different specializations</p>
                 </motion.div>
-                
+
                 <motion.div
                   className="p-6 bg-gray-light rounded-xl"
                   whileHover={{ y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <FiGrid className="w-8 h-8 text-primary mb-4" />
-                  <h4 className="font-semibold mb-2">Modern Stack</h4>
-                  <p className="text-sm text-accent">Stay updated with latest technologies</p>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <CubeIcon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h4 className="font-semibold">Modern Stack</h4>
+                  </div>
+                  <p className="text-sm text-accent">Learn the latest technologies and best practices</p>
                 </motion.div>
               </div>
             </motion.div>

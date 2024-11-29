@@ -1,56 +1,34 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Space_Grotesk } from 'next/font/google'
+import type { Metadata } from 'next';
+import { Space_Grotesk } from 'next/font/google';
 import "./globals.css";
 import { Providers } from "./providers";
+import AuthProvider from './providers/AuthProvider';
 import Script from 'next/script';
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
-  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'PathForge - Forge Your Development Journey',
-  description: 'Navigate your path to programming mastery with curated learning roadmaps.',
-  other: {
-    'vercel-analytics': 'false',
-  }
+  title: 'PathForge - Learning Platform',
+  description: 'Interactive learning platform for developers',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable}`} suppressHydrationWarning>
-      <head>
-        <Script id="disable-vercel" strategy="beforeInteractive">
-          {`
-            window.__VERCEL_NO_BANNER__ = true;
-            window.__VERCEL_INSIGHTS_ENABLED__ = false;
-          `}
-        </Script>
-      </head>
+    <html lang="en">
       <body
-        className={`bg-secondary text-primary min-h-screen font-sans ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-secondary text-primary min-h-screen font-sans ${spaceGrotesk.variable} antialiased`}
       >
         <Providers>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </Providers>
       </body>
     </html>

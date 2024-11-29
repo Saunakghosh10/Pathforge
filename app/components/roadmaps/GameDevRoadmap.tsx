@@ -153,7 +153,7 @@ export default function GameDevRoadmap() {
   const handleTopicClick = (topicId: string) => {
     const currentProgress = getTopicProgress('gamedev', topicId);
     if (currentProgress) {
-      updateTopicProgress('gamedev', topicId, !currentProgress.isCompleted);
+      updateTopicProgress('gamedev', topicId, !currentProgress.completed);
     } else {
       updateTopicProgress('gamedev', topicId, true);
     }
@@ -163,7 +163,7 @@ export default function GameDevRoadmap() {
     if (!topic.prerequisites) return true;
     return topic.prerequisites.every(prereqId => {
       const progress = getTopicProgress('gamedev', prereqId);
-      return progress?.isCompleted;
+      return progress?.completed;
     });
   };
 
@@ -190,7 +190,7 @@ export default function GameDevRoadmap() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               className={`p-6 rounded-lg border ${
-                progress?.isCompleted
+                progress?.completed
                   ? 'bg-green-50 border-green-200'
                   : isAccessible
                   ? 'bg-white hover:bg-gray-50 cursor-pointer'
@@ -202,7 +202,7 @@ export default function GameDevRoadmap() {
                 <div className="flex items-start space-x-4">
                   <div
                     className={`p-3 rounded-lg ${
-                      progress?.isCompleted ? 'bg-green-200' : 'bg-gray-200'
+                      progress?.completed ? 'bg-green-200' : 'bg-gray-200'
                     }`}
                   >
                     <Icon className="w-6 h-6" />
@@ -231,7 +231,7 @@ export default function GameDevRoadmap() {
                     </div>
                   </div>
                 </div>
-                {progress?.isCompleted && (
+                {progress?.completed && (
                   <FiCheck className="w-6 h-6 text-green-600" />
                 )}
               </div>
@@ -247,7 +247,7 @@ export default function GameDevRoadmap() {
                         <span
                           key={prereqId}
                           className={`text-sm px-2 py-1 rounded ${
-                            prereqProgress?.isCompleted
+                            prereqProgress?.completed
                               ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-800'
                           }`}
