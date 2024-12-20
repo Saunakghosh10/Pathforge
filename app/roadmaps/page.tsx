@@ -304,7 +304,7 @@ export default function RoadmapsPage() {
           <BestPracticesSection practices={frontendBestPractices} />
         </div>
         <div className="mt-16">
-          <ProjectIdeasSection projects={frontendProjectIdeas} />
+          <ProjectIdeasSection />
         </div>
       </div>
     </div>

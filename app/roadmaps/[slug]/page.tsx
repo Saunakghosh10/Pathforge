@@ -85,7 +85,7 @@ export default function RoadmapPage({ params }: RoadmapProps) {
 
         <div className="mt-8 space-y-8">
           <BestPracticesSection practices={frontendBestPractices} />
-          <ProjectIdeasSection projects={frontendProjectIdeas} />
+          <ProjectIdeasSection />
         </div>
       </div>
     </motion.div>
