@@ -5,6 +5,10 @@ import { motion } from 'framer-motion';
 import { useProgress } from '@/app/context/ProgressContext';
 import { RoadmapTopic } from '@/types/roadmap';
 import RoadmapNode from '@/app/components/roadmaps/RoadmapNode';
+import BestPracticesSection from '../../components/roadmaps/BestPracticesSection';
+import ProjectIdeasSection from '../../components/roadmaps/ProjectIdeasSection';
+import { frontendBestPractices } from '../data/bestPractices';
+import { frontendProjectIdeas } from '../data/projectIdeas';
 
 interface RoadmapProps {
   params: {
@@ -77,6 +81,11 @@ export default function RoadmapPage({ params }: RoadmapProps) {
               roadmapId={roadmap.id}
             />
           ))}
+        </div>
+
+        <div className="mt-8 space-y-8">
+          <BestPracticesSection practices={frontendBestPractices} />
+          <ProjectIdeasSection projects={frontendProjectIdeas} />
         </div>
       </div>
     </motion.div>

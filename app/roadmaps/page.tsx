@@ -3,6 +3,10 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import * as HeroIcons from '@heroicons/react/24/outline';
+import BestPracticesSection from '../components/roadmaps/BestPracticesSection';
+import ProjectIdeasSection from '../components/roadmaps/ProjectIdeasSection';
+import { frontendBestPractices } from './data/bestPractices';
+import { frontendProjectIdeas } from './data/projectIdeas';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -287,9 +291,21 @@ export default function RoadmapsPage() {
         />
         <RoadmapSection 
           title="Skill-Based Roadmaps"
-          description="Focused learning paths for mastering specific technologies and concepts"
+          description="Learn specific technologies and skills with structured learning paths"
           roadmaps={skillBasedRoadmaps} 
         />
+        <div className="mt-16 mb-8">
+          <h2 className="text-2xl font-bold text-black">Best Practices</h2>
+          <p className="mt-2 text-gray-400">
+            Master industry-standard practices and patterns for efficient development
+          </p>
+        </div>
+        <div className="mt-8">
+          <BestPracticesSection practices={frontendBestPractices} />
+        </div>
+        <div className="mt-16">
+          <ProjectIdeasSection projects={frontendProjectIdeas} />
+        </div>
       </div>
     </div>
   );
